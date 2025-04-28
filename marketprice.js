@@ -9,7 +9,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 async function coutrywise_export() {
   const browser = await puppeteer.launch({ 
-    headless: false,
+    headless: true,
     args: ['--disable-popup-blocking']
   });
   const page = await browser.newPage();
