@@ -9,7 +9,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 async function coutrywise_export() {
   const browser = await puppeteer.launch({ 
-    headless: true,
+    headless: false,
     args: ['--disable-popup-blocking']
   });
   const page = await browser.newPage();
@@ -66,25 +66,33 @@ async function coutrywise_export() {
             document.querySelector('#EidbYearcwace').value = year;
             document.querySelector('#EidbYearcwace').dispatchEvent(new Event('change'));
           }, i.toString());
-          await waitForLivewireUpdate();
+          // await waitForLivewireUpdate();
 
           // Select country
           await page.evaluate((country) => {
             document.querySelector('#EidbCntcwace').value = country;
             document.querySelector('#EidbCntcwace').dispatchEvent(new Event('change'));
           }, value);
-          await waitForLivewireUpdate();
+          // await waitForLivewireUpdate();
 
           // Select report type
           await page.select('#EidbReportcwace', '1');
-          await waitForLivewireUpdate();
+          // await waitForLivewireUpdate();
 
           // Select commodity level
           await page.evaluate((level) => {
             document.querySelector('#EidbComLevelcwace').value = level;
             document.querySelector('#EidbComLevelcwace').dispatchEvent(new Event('change'));
           }, j.toString());
-          await waitForLivewireUpdate();
+          // await waitForLivewireUpdate();
+          
+          const buttons = await page.$$('button');
+          if (buttons.length >= 3) {
+            await buttons[1].click();
+          } else {
+            console.log('Less than 3 buttons found on the page.');
+          }
+
           await new Promise(resolve => setTimeout(resolve, 5000));
 
           // Wait for table
