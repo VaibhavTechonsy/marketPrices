@@ -9,7 +9,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 
 async function coutrywise_export() {
   const browser = await puppeteer.launch({ 
-    headless: false,
+    headless: true,
     args: ['--disable-popup-blocking']
   });
   const page = await browser.newPage();
@@ -93,7 +93,7 @@ async function coutrywise_export() {
             console.log('Less than 3 buttons found on the page.');
           }
 
-          await new Promise(resolve => setTimeout(resolve, 5000));
+          await new Promise(resolve => setTimeout(resolve, 10000));
 
           // Wait for table
           await page.waitForSelector('table.table-bordered.table-striped', { timeout: 15000 });
