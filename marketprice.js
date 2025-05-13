@@ -10,7 +10,7 @@ const supabase = createClient(supabaseUrl, supabaseKey);
 async function coutrywise_export() {
   const browser = await puppeteer.launch({ 
     headless: true,
-    args: ['--disable-popup-blocking']
+    args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-popup-blocking']
   });
   const page = await browser.newPage();
 
@@ -21,6 +21,7 @@ async function coutrywise_export() {
     };
   });
 
+  await page.setViewport({ width: 1366, height: 768 });
   await page.setDefaultNavigationTimeout(60000);
   
   await page.goto('https://tradestat.commerce.gov.in/eidb/country_wise_all_commodities_export', {
